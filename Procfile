@@ -1,1 +1,1 @@
-worker: pipenv run start
+start: py src/index.py
