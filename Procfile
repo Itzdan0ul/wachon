@@ -1,2 +1,1 @@
-start: pipenv run start
-test: pipenv shell
+start: py src/index.py
