@@ -7,9 +7,9 @@ name = "pypi"
 start = "py src/index.py"
 
 [packages]
-"discord.py" = "2.0.1"
-python-dotenv = "0.20.0"
-python-aternos = "1.1.2"
+"discord.py" = "*"
+python-dotenv = "*"
+python-aternos = "*"
 
 [dev-packages]
 
