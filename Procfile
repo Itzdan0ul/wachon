@@ -1,1 +1,1 @@
-start: py src/index.py
+start: python3 src/index.py
