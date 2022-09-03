@@ -1,2 +1,2 @@
-worker: pipenv run start
-test: pipenv graph
+start: pipenv run start
+test: pipenv shell
