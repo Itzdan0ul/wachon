@@ -8,11 +8,11 @@
 
 ## Compile
 
-The application was made purely with Python and uses the Pipenv virtual environment.
+The application was made purely with Python.
 
-### Pipenv
+### Requirements
 
-`pipenv run start`
+`pip install -r requirements.txt`
 
 ## Features
 
