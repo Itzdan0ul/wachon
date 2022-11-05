@@ -16,8 +16,7 @@ The application was made purely with Python.
 
 ## Features
 
-- Displays information about Minecraft servers.
-- Turn on the Minecraft servers to use.
+- Create informative letters.
 
 ## License
 
