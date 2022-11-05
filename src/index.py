@@ -46,11 +46,44 @@ async def help(ctx: commands.Context):
     **El prefijo es `->`.*
 
     `help` - Muestra la lista de comandos disponibles.
-
+    `widget  CHANNEL PAGE_NAME [DESCRIPTION [LINK [IMAGES [NOTES]]]]` - Envía un widget de contenido a un canal específicado.
     ''', 
     color=discord.Color.blue()
   )
   
   await ctx.send(embed=embed)
+
+@bot.command(name='widget')
+async def widget(ctx: commands.Context, 
+                 channel: discord.TextChannel, 
+                 page: str, 
+                 desc: str=None, 
+                 link: str=None, 
+                 image: str=None,
+                 notes: str=None):
+  for role in ctx.author.roles:
+    if role.name == 'Programmer':
+      colors = {
+        'red': discord.Color.red(),
+        'green': discord.Color.green(),
+        'blue': discord.Color.blue(),
+        'yellow': discord.Color.gold(),
+        'purple': discord.Color.purple(),
+        'orange': discord.Color.orange(),
+      }
+      embed = discord.Embed(
+        title=f'{page}',
+        description=f'{desc}',
+        color=colors[random.choice(list(colors))],
+      )
+      
+      embed.set_thumbnail(url=f'{image}')
+      embed.add_field(name='URL', value=f'https://{link}', inline=False)
+      
+      if notes:
+        embed.add_field(name='Notas', value=f'{notes}', inline=False)
+
+      await channel.send(embed=embed)
+      break
 
 bot.run(os.environ['TOKEN'])
