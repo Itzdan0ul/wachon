@@ -77,8 +77,10 @@ async def widget(ctx: commands.Context,
         color=colors[random.choice(list(colors))],
       )
       
-      embed.set_thumbnail(url=f'{image}')
       embed.add_field(name='URL', value=f'https://{link}', inline=False)
+
+      if image:
+          embed.set_thumbnail(url=f'{image}')
       
       if notes:
         embed.add_field(name='Notas', value=f'{notes}', inline=False)
