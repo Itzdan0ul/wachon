@@ -1,0 +1,8 @@
+# fly.toml file generated for discord-wachon-bot on 2022-12-21T14:55:39-06:00
+
+app = "discord-wachon-bot"
+kill_signal = "SIGINT"
+kill_timeout = 5
+processes = []
+
+[env]
