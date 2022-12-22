@@ -109,7 +109,7 @@ async def url_snippet(ctx: commands.Context,
         'orange': discord.Color.orange(),
       }
       embed = discord.Embed(
-        title=f'{page}',
+        title=f'{title}',
         description=f'{desc}',
         color=colors[random.choice(list(colors))],
       )
