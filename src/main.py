@@ -1,4 +1,4 @@
-# Authors: Itzdan0ul, jerapepe & Parrot14 (2022)
+# Authors: Itzdan0ul & Parrot14 (2022)
 # index.py
 
 import os
