@@ -2,12 +2,11 @@
 # index.py
 
 import os
-import time
 from datetime import date 
 import random
 import discord
 from dotenv import load_dotenv
-from discord.ext import commands
+from discord.ext import commands, tasks
 
 load_dotenv()
 
@@ -26,12 +25,16 @@ async def on_ready():
     'qué mamada hacer.', 
     'este pinche mundo muerto.',
     'que Dios nos ha abandonado.',
+    'que soy muy miserable.',
+    'que soy un fracaso.',
+    'que soy un inútil.',
+    'que la extraño mucho.',
   ]
-
+  
+  check_birthdays.start()
+  
   await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f'{random.choice(thoughts)}'))
 
-  on_listen_birthdays()
-  
 @bot.event
 async def on_command_error(ctx: commands.Context, error: commands.CommandError):
   if isinstance(error, commands.CommandNotFound):
@@ -211,37 +214,66 @@ async def docs_snippet(ctx: commands.Context, channel: discord.TextChannel, titl
       await channel.send(embed=embed)
       break
 
-async def on_listen_birthdays():
+@tasks.loop(hours=24)
+async def check_birthdays(): 
   birthdays: list = [
     (1, 10, 895480692522250271), # Daniel Romero
     (3, 2, 791473769075703848), # Ivan Huerta
-    (3, 10, 434778407239286805), # Erik V.
+    (3, 10, 434778407239286805), # Erik Villegas
     (5, 6, 430916352686030848), # Brayan Gay
+    (6, 13, 430916352686030848), # Jose Ruiz
     (8, 8, 692240248368791573), # Luis Rayas
     (8, 9, 550544475420622849), # Alan Silva
     (9, 16, 751955612731965552), # Ale Silva
     (11, 18, 763491461118951426), # Dan Urtiz
-    (12, 18, 405569777214685184), # Max  Torres
-    (5, 26, 767812170237870101) # Test
+    (12, 18, 405569777214685184) # Max Torres
   ]
 
-  while True:
-    today: date = date.today()
-    current_month: int = today.month
-    current_day: int = today.day
+  today: date = date.today()
+  current_month: int = today.month
+  current_day: int = today.day
 
-    for month, day, id in birthdays:
-      if current_month == month and current_day == day:
-        embed = discord.Embed(
-          title=f'¡Feliz cumpleaños! <@{id}> :partying_face: :tada: :birthday:',
-          description=f"""¡Que tengas un día increíble!""",
-          
-          color=discord.Color.purple(),
+  gifs: list = [
+      'https://media1.tenor.com/m/SVfm3-297cIAAAAd/konosuba-aqua-cum.gif',
+      'https://media1.tenor.com/m/toaos0JEj1gAAAAd/cum-cake.gif',
+      'https://media.tenor.com/bh9MAiCpL6wAAAAj/birthday-cake.gif'
+    ]
+
+  for month, day, user_id in birthdays:
+    if current_month == month and current_day == day:
+      embed = discord.Embed(
+        title='¡Feliz CUMpleaños! 🎉🎉🎉',
+        description=f"""
+          Para ti cumpleaños feliz, <@{user_id}>
+
+          hora un poema para ti:
+          En tu cumpleaños, mezcla de gloria y aflicción,
+          Un año más se suma, con su carga de frustración.
+          Las arrugas avanzan, la juventud se va,
+          Pero la sabiduría y las memorias, ¡esas siempre quedarán!
+
+          Desesperanza y brillo, en un solo día,
+          Ríe y llora, en esta travesía.
+          Porque aunque el tiempo pase y se sienta cruel,
+          Las vivencias y risas son el mejor laurel.
+
+          Feliz cumpleaños, en esta dualidad,
+          Donde el pesar se mezcla con la felicidad.
+          Brindemos por lo bueno y lo malo también,
+          Porque vivir significa abrazar lo que viene.
+          """,
+          color=discord.Color.purple()
         )
-        
-        await bot.get_channel(1244398461093285929).send(embed=embed)
-        break
-  
-    time.sleep(60 * 60 * 24)
+      
+      embed.set_image(url=random.choice(gifs))
+
+      channel = bot.get_channel(1244398461093285929)
+      
+      await channel.send(embed=embed)
+      break
+
+@check_birthdays.before_loop
+async def before_check_birthdays():
+  await bot.wait_until_ready()
 
 bot.run(os.environ['TOKEN'])
