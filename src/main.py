@@ -237,10 +237,10 @@ async def on_listen_birthdays():
           description=f"""¡Que tengas un día increíble!""",
           
           color=discord.Color.purple(),
-      )
-
-      await bot.get_channel(1244398461093285929).send(embed=embed)
-      break
+        )
+        
+        await bot.get_channel(1244398461093285929).send(embed=embed)
+        break
   
     time.sleep(60 * 60 * 24)
 
