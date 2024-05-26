@@ -3,12 +3,11 @@
 
 import os
 import time
+from datetime import date 
 import random
 import discord
-import threading
 from dotenv import load_dotenv
 from discord.ext import commands
-from discord.ui import View, Button
 
 load_dotenv()
 
@@ -30,6 +29,8 @@ async def on_ready():
   ]
 
   await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f'{random.choice(thoughts)}'))
+
+  on_listen_birthdays()
   
 @bot.event
 async def on_command_error(ctx: commands.Context, error: commands.CommandError):
@@ -209,5 +210,38 @@ async def docs_snippet(ctx: commands.Context, channel: discord.TextChannel, titl
 
       await channel.send(embed=embed)
       break
+
+async def on_listen_birthdays():
+  birthdays: list = [
+    (1, 10, 895480692522250271), # Daniel Romero
+    (3, 2, 791473769075703848), # Ivan Huerta
+    (3, 10, 434778407239286805), # Erik V.
+    (5, 6, 430916352686030848), # Brayan Gay
+    (8, 8, 692240248368791573), # Luis Rayas
+    (8, 9, 550544475420622849), # Alan Silva
+    (9, 16, 751955612731965552), # Ale Silva
+    (11, 18, 763491461118951426), # Dan Urtiz
+    (12, 18, 405569777214685184) # Max  Torres
+    (5, 26, 767812170237870101) # Test
+  ]
+
+  while True:
+    today: date = date.today()
+    current_month: int = today.month
+    current_day: int = today.day
+
+    for month, day, id in birthdays:
+      if current_month == month and current_day == day:
+        embed = discord.Embed(
+          title=f'¡Feliz cumpleaños! <@{id}> :partying_face: :tada: :birthday:',
+          description=f"""¡Que tengas un día increíble!""",
+          
+          color=discord.Color.purple(),
+      )
+
+      await bot.get_channel(895480692522250271).send(embed=embed)
+      break
+  
+    time.sleep(60 * 60 * 24)
 
 bot.run(os.environ['TOKEN'])
